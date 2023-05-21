@@ -2,7 +2,7 @@ const cloths = [
   { title: "Print #1", src: "images/image1.jpg" },
   { title: "Print #2", src: "images/image2.jpg" },
   { title: "Print #3", src: "images/image3.jpg" },
-  { title: "Print #4", src: "images/image4jpg" },
+  { title: "Print #4", src: "images/image4.jpg" },
   { title: "Print #5", src: "images/image5.jpg" }
 ]
 
@@ -23,11 +23,15 @@ const next = () => {
 
 const prev = () => {
   currentSlide -= 1
+  if (currentSlide < 0) {
+    currentSlide = cloths.length + 1
+  }
   update()
 }
 
 const update = () => {
   description.innerHTML = cloths[currentSlide].title
+  image.setAttribute("src", cloths[currentSlide].src)
 }
 update()
 
