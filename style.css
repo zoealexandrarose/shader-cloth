@@ -8,6 +8,16 @@
   --highlight: #ab2a2c;
 }
 
+body.light {
+  --background: #d7d7be;
+  --highlight: #000000;
+}
+
+body.dark {
+  --background: #222222;
+  --highlight: #ffffff;
+}
+
 body {
   font-family: Porpora;
   font-size: 24px;
@@ -18,6 +28,8 @@ body {
   background-color: var(--background);
   background-image: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.25));
   color: var(--highlight);
+
+  transition: background-color 0.5s, color 0.5s;
 }
 
 header {
@@ -44,6 +56,8 @@ h1, div.description, nav a {
   border: 2px solid var(--highlight);
 
   margin: 0 0 2px 0;
+
+  transition: background-color 0.2s, color 0.2s;
 }
 
 nav {

@@ -1,9 +1,9 @@
 const cloths = [
-  { title: "Print #1", src: "images/image1.jpg" },
-  { title: "Print #2", src: "images/image2.jpg" },
-  { title: "Print #3", src: "images/image3.jpg" },
-  { title: "Print #4", src: "images/image4.jpg" },
-  { title: "Print #5", src: "images/image5.jpg" }
+  { title: "Print #1", src: "images/image1.jpg", theme: "" },
+  { title: "Print #2", src: "images/image2.jpg", theme: "" },
+  { title: "Print #3", src: "images/image3.jpg", theme: "light" },
+  { title: "Print #4", src: "images/image4.jpg", theme: "dark" },
+  { title: "Print #5", src: "images/image5.jpg", theme: "dark" }
 ]
 
 const image = document.querySelector("section img")
@@ -32,6 +32,7 @@ const prev = () => {
 const update = () => {
   description.innerHTML = cloths[currentSlide].title
   image.setAttribute("src", cloths[currentSlide].src)
+  document.body.className = cloths[currentSlide].theme
 }
 update()
 
