@@ -6,19 +6,37 @@ const cloths = [
   { title: "Print #5", src: "images/image5.jpg", theme: "dark" }
 ]
 
-const image = document.querySelector("section img")
-const description = document.querySelector("div.description")
-const prevTag = document.querySelector("nav a.prev")
-const nextTag = document.querySelector("nav a.next")
+const section = document.querySelector("section");
+const description = document.querySelector("div.description");
+const prevTag = document.querySelector("nav a.prev");
+const nextTag = document.querySelector("nav a.next");
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 75, section.clientWidth / section.clientHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setClearColor(0xff0000, 0)
+renderer.setSize( section.clientWidth, section.clientHeight );
+section.appendChild( renderer.domElement );
 
 // where are we in the slideshow
 let currentSlide = 0
+
+// hold state of where we are, and then add things
+const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+camera.position.z = 5;
+
+
 const next = () => {
   currentSlide += 1
   if (currentSlide > cloths.length - 1) {
     currentSlide = 0
   }
-  update()
+  update();
 }
 
 const prev = () => {
@@ -26,21 +44,27 @@ const prev = () => {
   if (currentSlide < 0) {
     currentSlide = cloths.length + 1
   }
-  update()
+  update();
 }
 
 const update = () => {
   description.innerHTML = cloths[currentSlide].title
-  image.setAttribute("src", cloths[currentSlide].src)
   document.body.className = cloths[currentSlide].theme
 }
-update()
+
+function animate() {
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+}
+
+animate();
+update();
 
 prevTag.addEventListener("click", (event) => {
-  event.preventDefault()
-  prev()
+  event.preventDefault();
+  prev();
 })
 nextTag.addEventListener("click", (event) => {
-  event.preventDefault()
-  next()
+  event.preventDefault();
+  next();
 })
