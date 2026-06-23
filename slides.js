@@ -19,20 +19,31 @@ renderer.setClearColor(0xff0000, 0)
 renderer.setSize( section.clientWidth, section.clientHeight );
 section.appendChild( renderer.domElement );
 
-// where are we in the slideshow
-let currentSlide = 0
+let currentSlide = 0;
+let currentRotationY = 0;
+let aimRotationY = 0;
 
-// hold state of where we are, and then add things
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+const arc = Math.PI * 2  / cloths.length
 
-camera.position.z = 5;
+cloths.forEach((cloth, index) => {
+  // hold state of where we are, and then add things
+  const geometry = new THREE.PlaneGeometry(4, 6);
+  const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  const shape = new THREE.Mesh( geometry, material );
+
+  const group = new THREE.Group();
+  group.rotation.set(0, index * arc, 0);
+  shape.position.set(0, 0, -10);
+
+  group.add( shape );
+  scene.add(group)
+})
+
 
 
 const next = () => {
   currentSlide += 1
+  aimRotationY -= arc
   if (currentSlide > cloths.length - 1) {
     currentSlide = 0
   }
@@ -41,6 +52,7 @@ const next = () => {
 
 const prev = () => {
   currentSlide -= 1
+  aimRotationY += arc
   if (currentSlide < 0) {
     currentSlide = cloths.length + 1
   }
@@ -53,6 +65,10 @@ const update = () => {
 }
 
 function animate() {
+  const diffY = (aimRotationY - currentRotationY) * 0.025;
+  currentRotationY += diffY;
+  camera.rotation.set(0, currentRotationY, 0);
+
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 }
