@@ -12,7 +12,7 @@ const prevTag = document.querySelector("nav a.prev");
 const nextTag = document.querySelector("nav a.next");
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, section.clientWidth / section.clientHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 55, section.clientWidth / section.clientHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setClearColor(0xff0000, 0)
@@ -23,12 +23,16 @@ let currentSlide = 0;
 let currentRotationY = 0;
 let aimRotationY = 0;
 
+const loader = new THREE.TextureLoader();
+
 const arc = Math.PI * 2  / cloths.length
 
 cloths.forEach((cloth, index) => {
   // hold state of where we are, and then add things
   const geometry = new THREE.PlaneGeometry(4, 6);
-  const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  const material = new THREE.MeshBasicMaterial({
+    map: loader.load(cloth.src)
+  });
   const shape = new THREE.Mesh( geometry, material );
 
   const group = new THREE.Group();
