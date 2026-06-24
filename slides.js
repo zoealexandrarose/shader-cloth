@@ -28,10 +28,16 @@ const loader = new THREE.TextureLoader();
 const arc = Math.PI * 2  / cloths.length
 
 cloths.forEach((cloth, index) => {
+  cloth.uniforms = {
+    image: { value: loader.load(cloth.src) }
+  }
+
   // hold state of where we are, and then add things
   const geometry = new THREE.PlaneGeometry(4, 6);
-  const material = new THREE.MeshBasicMaterial({
-    map: loader.load(cloth.src)
+  const material = new THREE.ShaderMaterial({
+    uniforms: cloth.uniforms,
+    vertexShader: vert,
+    fragmentShader: frag,
   });
   const shape = new THREE.Mesh( geometry, material );
 
