@@ -18,7 +18,14 @@ const vert = `
 
     float wave = mix(-2.0, 2.0, fbm(0.1 * position + wind));
 
-    newPosition.z += wave;
+    vec2 peg1 = vec2(0.0, 1.0);
+    vec2 peg2 = vec2(1.0, 1.0);
+
+    float tension = distance(uv, peg1) * distance(uv, peg2);
+    float gravity = -0.2 * sin(uv.x * 3.141);
+
+    newPosition.y += gravity;
+    newPosition.z += tension * wave;
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 
