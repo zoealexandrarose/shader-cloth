@@ -34,12 +34,13 @@ cloths.forEach((cloth, index) => {
     time: { value: clock.getElapsedTime() }
   }
 
+  const dpi = 100;
   // hold state of where we are, and then add things
-  const geometry = new THREE.PlaneGeometry(4, 6);
+  const geometry = new THREE.PlaneGeometry(4, 6, dpi, dpi * 1.5);
   const material = new THREE.ShaderMaterial({
     uniforms: cloth.uniforms,
     vertexShader: vert,
-    fragmentShader: frag,
+    fragmentShader: frag
   });
   const shape = new THREE.Mesh( geometry, material );
 
