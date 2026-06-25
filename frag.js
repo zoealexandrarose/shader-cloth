@@ -1,6 +1,7 @@
 const frag = `
   ${includes}
-
+  
+  uniform float time;
   uniform sampler2D image;
 
   varying vec3 v_position;
@@ -31,7 +32,7 @@ const frag = `
     vec4 objectColor = texture2D(image, v_uv);
 
     Light l = Light(
-      vec3(0.0, 0.0, 1.0),
+      vec3(5.0 * sin(time), 0.0, 1.0),
       vec3(1.0, 1.0, 1.0)
     );
 

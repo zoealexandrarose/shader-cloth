@@ -24,12 +24,14 @@ let currentRotationY = 0;
 let aimRotationY = 0;
 
 const loader = new THREE.TextureLoader();
+const clock = new THREE.Clock();
 
 const arc = Math.PI * 2  / cloths.length
 
 cloths.forEach((cloth, index) => {
   cloth.uniforms = {
-    image: { value: loader.load(cloth.src) }
+    image: { value: loader.load(cloth.src) },
+    time: { value: clock.getElapsedTime() }
   }
 
   // hold state of where we are, and then add things
@@ -74,10 +76,14 @@ const update = () => {
   document.body.className = cloths[currentSlide].theme
 }
 
-function animate() {
+const animate = () => {
   const diffY = (aimRotationY - currentRotationY) * 0.025;
   currentRotationY += diffY;
   camera.rotation.set(0, currentRotationY, 0);
+
+  cloths.forEach(cloth => {
+    cloth.uniforms.time = { value: clock.getElapsedTime() }
+  })
 
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
