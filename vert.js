@@ -12,7 +12,7 @@ const vert = `
     vec3 newPosition = position;
     vec3 wind = vec3(
       fbm(0.1 * position + 0.1 * time),
-      fbm(0.2 * position - 0.2 * time),
+      fbm(0.2 * position - 0.1 * time),
       fbm(0.3 * position + 0.3 * time)
     );
 

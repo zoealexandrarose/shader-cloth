@@ -1,6 +1,6 @@
 const frag = `
   ${includes}
-  
+
   uniform float time;
   uniform sampler2D image;
 
