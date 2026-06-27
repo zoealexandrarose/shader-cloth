@@ -3,6 +3,7 @@ const frag = `
 
   uniform float time;
   uniform sampler2D image;
+  uniform vec2 mouse;
 
   varying vec3 v_position;
   varying vec3 v_normal;

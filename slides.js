@@ -25,13 +25,16 @@ let aimRotationY = 0;
 
 const loader = new THREE.TextureLoader();
 const clock = new THREE.Clock();
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
 const arc = Math.PI * 2  / cloths.length
 
 cloths.forEach((cloth, index) => {
   cloth.uniforms = {
     image: { value: loader.load(cloth.src) },
-    time: { value: clock.getElapsedTime() }
+    time: { value: clock.getElapsedTime() },
+    mouse: { value: mouse }
   }
 
   const dpi = 100;
@@ -84,6 +87,7 @@ const animate = () => {
 
   cloths.forEach(cloth => {
     cloth.uniforms.time = { value: clock.getElapsedTime() }
+    cloth.uniforms.mouse = { value: mouse }
   })
 
 	requestAnimationFrame( animate );
@@ -100,4 +104,9 @@ prevTag.addEventListener("click", (event) => {
 nextTag.addEventListener("click", (event) => {
   event.preventDefault();
   next();
+})
+
+window.addEventListener('mousemove', function (event) {
+  mouse.x = event.clientX / section.clientWidth * 2 - 1;
+  mouse.y = event.clientY / section.clientHeight * -2 + 1;
 })
