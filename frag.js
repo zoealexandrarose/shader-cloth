@@ -46,10 +46,6 @@ const frag = `
     vec3 rgb = addLight(l) * objectColor.rgb;
     vec4 finalColor = vec4(rgb, 1.0);
 
-    if (distance(v_uv, touchUv) < 0.1) {
-      finalColor= vec4(1.0, 0.0, 0.0, 1.0);
-    }
-
     gl_FragColor = finalColor;
   }
 `

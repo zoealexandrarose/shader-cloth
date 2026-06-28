@@ -3,6 +3,7 @@ const vert = `
 
   uniform float time;
   uniform vec2 touchUv;
+  uniform float touchStrength;
 
   varying vec3 v_position;
   varying vec3 v_normal;
@@ -29,9 +30,9 @@ const vert = `
     newPosition.z += tension * wave;
 
     float mouseDistance = distance(touchUv, uv);
-    float mouseScore = smoothstep(0.25, 0.0, mouseDistance);
+    float mouseScore = smoothstep(0.5, 0.0, mouseDistance);
 
-    newPosition.z += mix(0.0, -6.0, tension * mouseScore);
+    newPosition.z += mix(0.0, -3.0 * touchStrength, tension * mouseScore);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
 

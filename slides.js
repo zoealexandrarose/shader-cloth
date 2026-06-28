@@ -35,12 +35,14 @@ cloths.forEach((cloth, index) => {
     image: { value: loader.load(cloth.src) },
     time: { value: clock.getElapsedTime() },
     mouse: { value: mouse },
-    touchUv: { value: new THREE.Vector2(0.5, 0.5) }
+    touchUv: { value: new THREE.Vector2(0.5, 0.5) },
+    touchStrength: { value: 0 },
+    touchStrengthAim: { value: 0 }
   }
 
   const dpi = 100;
   // hold state of where we are, and then add things
-  const geometry = new THREE.PlaneGeometry(4, 6, dpi, dpi * 1.5);
+  const geometry = new THREE.PlaneGeometry(6, 9, dpi, dpi * 1.5);
   const material = new THREE.ShaderMaterial({
     uniforms: cloth.uniforms,
     vertexShader: vert,
@@ -97,9 +99,16 @@ const animate = () => {
     const intersects = raycaster.intersectObject(cloth.shape)
     if (intersects.length > 0) {
       cloth.uniforms.touchUv = { value: intersects[0].uv }
+      cloth.uniforms.touchStrengthAim = { value: 1 }
     } else {
-
+      cloth.uniforms.touchStrengthAim = { value: 0 }
     }
+
+    const currentStrength = cloth.uniforms.touchStrength.value
+    const aimStrength = cloth.uniforms.touchStrengthAim.value
+    const diffStrength = (aimStrength - currentStrength) * 0.05
+
+    cloth.uniforms.touchStrength = { value: currentStrength + diffStrength }
   })
 
 	requestAnimationFrame( animate );
