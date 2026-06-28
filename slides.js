@@ -34,7 +34,8 @@ cloths.forEach((cloth, index) => {
   cloth.uniforms = {
     image: { value: loader.load(cloth.src) },
     time: { value: clock.getElapsedTime() },
-    mouse: { value: mouse }
+    mouse: { value: mouse },
+    touchUv: { value: new THREE.Vector2(0.5, 0.5) }
   }
 
   const dpi = 100;
@@ -50,6 +51,8 @@ cloths.forEach((cloth, index) => {
   const group = new THREE.Group();
   group.rotation.set(0, index * arc, 0);
   shape.position.set(0, 0, -10);
+
+  cloth.shape = shape;
 
   group.add( shape );
   scene.add(group)
@@ -85,9 +88,18 @@ const animate = () => {
   currentRotationY += diffY;
   camera.rotation.set(0, currentRotationY, 0);
 
+  raycaster.setFromCamera(mouse, camera)
+
   cloths.forEach(cloth => {
     cloth.uniforms.time = { value: clock.getElapsedTime() }
     cloth.uniforms.mouse = { value: mouse }
+
+    const intersects = raycaster.intersectObject(cloth.shape)
+    if (intersects.length > 0) {
+      cloth.uniforms.touchUv = { value: intersects[0].uv }
+    } else {
+
+    }
   })
 
 	requestAnimationFrame( animate );
