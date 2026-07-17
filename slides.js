@@ -131,3 +131,10 @@ window.addEventListener('mousemove', function (event) {
   mouse.x = event.clientX / section.clientWidth * 2 - 1;
   mouse.y = event.clientY / section.clientHeight * -2 + 1;
 })
+
+window.addEventListener("resize", function () {
+  camera.aspect = section.clientWidth / section.clientHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(section.clientWidth, section.clientHeight);
+})
