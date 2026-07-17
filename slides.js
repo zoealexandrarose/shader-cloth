@@ -20,6 +20,8 @@ renderer.setSize( section.clientWidth, section.clientHeight );
 section.appendChild( renderer.domElement );
 
 let currentSlide = 0;
+let currentRotationX = Math.PI / 4;
+let aimRotationX = 0;
 let currentRotationY = 0;
 let aimRotationY = 0;
 
@@ -86,9 +88,12 @@ const update = () => {
 }
 
 const animate = () => {
+  const diffX = (aimRotationX - currentRotationX) * 0.015;
+  currentRotationX += diffX;
+
   const diffY = (aimRotationY - currentRotationY) * 0.025;
   currentRotationY += diffY;
-  camera.rotation.set(0, currentRotationY, 0);
+  camera.rotation.set(currentRotationX, currentRotationY, 0);
 
   raycaster.setFromCamera(mouse, camera)
 
