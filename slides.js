@@ -91,7 +91,7 @@ const animate = () => {
   const diffX = (aimRotationX - currentRotationX) * 0.015;
   currentRotationX += diffX;
 
-  const diffY = (aimRotationY - currentRotationY) * 0.025;
+  const diffY = (aimRotationY - currentRotationY) * 0.04;
   currentRotationY += diffY;
   camera.rotation.set(currentRotationX, currentRotationY, 0);
 
